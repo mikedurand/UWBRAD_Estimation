@@ -1,4 +1,3 @@
-clear all
 
 % load('dat/TbUWBRAD.mat','UWBRADc')
 load('dat/TbMEMLS.mat')
@@ -39,4 +38,7 @@ TbUWBRADc=(TbUWBRADv+TbUWBRADh)./2;
 figure(1)
 plot(f,TbUWBRADc(:,1,1,25))
 
-save('dat/TbUWBRAD-v2.mat','TbUWBRADc','f','rho','dT','B','tetad','nx')
+run=num2str(run);
+fname=['TbUWBRAD' 'run' run '.mat'];
+dir='dat/';
+save([dir fname],'TbUWBRADc','f','rho','dT','B','tetad','nx')
