@@ -37,8 +37,8 @@ TbUWBRADc=(TbUWBRADv+TbUWBRADh)./2;
 
 figure(1)
 plot(f,TbUWBRADc(:,1,1,25))
+set(gca,'FontSize',14)
+xlabel('Frequency Ghz')
+ylabel('UWBRADTbc K')
 
-run=num2str(run);
-fname=['TbUWBRAD' 'run' run '.mat'];
-dir='dat/';
-save([dir fname],'TbUWBRADc','f','rho','dT','B','tetad','nx')
+save('dat/TbUWBRAD-v2.mat','TbUWBRADc','f','rho','dT','B','tetad','nx')

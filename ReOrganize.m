@@ -1,4 +1,4 @@
-clear all
+%clear all
 
 load('dat/TbUWBRAD-v2.mat');
 TbUWBRADOrig=TbUWBRADc; clear TbUWBRADc

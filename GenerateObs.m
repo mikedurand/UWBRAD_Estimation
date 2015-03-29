@@ -3,7 +3,7 @@
 %clear all
 
 % load TbUWBRAD from different running
-D=load([dir fname]);
+D=load('dat/TbUWBRAD.mat');
 load('dat/CISMG.mat');
 
 sigTb=0.5; %observational uncertainty
