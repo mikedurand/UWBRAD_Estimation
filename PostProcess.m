@@ -1,6 +1,7 @@
 %clear all
 
-load runs/Exp1.mat
+frun=['runs/Exp' num2str(ExpNum) '.mat'];
+load (frun);
 load dat/Robin_Sensitive_study.mat
 
 %% estimate & temperature profiles
@@ -15,7 +16,7 @@ Bhat=median(Bc(i));
 
 
 %% plots
-figure(1)
+figure(3)
 subplot(311)
 plot(rhoc)
 ylabel('\rho')
@@ -28,7 +29,7 @@ ylabel('B')
 
 i=N/5+1:N;
 % i=N-20000:N;
-figure(2)
+figure(4)
 subplot(221)
 plot(rhoc(i),dTc(i),'.')
 subplot(222)
@@ -36,7 +37,7 @@ plot(rhoc(i),Bc(i),'.')
 subplot(223)
 plot(dTc(i),Bc(i),'.')
 
-figure(3)
+figure(5)
 subplot(221)
 hist(rhoc(i))
 subplot(222)
@@ -48,7 +49,7 @@ rhohat=median(rhoc(i));
 dThat=median(dTc(i));
 Bhat=median(Bc(i));
 
-figure(4)
+figure(6)
 plot3(rhoc(i),dTc(i),Bc(i),'.')
 set(gca,'FontSize',14)
 grid on
@@ -56,5 +57,6 @@ xlabel('\sigma_\rho, kg/m^3')
 ylabel('Surf temperature offset, K')
 zlabel('Basal heat flux, mW/m^2')
 
-figure(5)
+figure(7)
 plot(tempt,-z,temphat,-z); 
+legend('tempt','temphat')
