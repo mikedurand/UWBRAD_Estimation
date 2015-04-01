@@ -20,3 +20,20 @@
 %dat/Exp0 ~ x=15, N=1E4
 %dat/Exp1 ~ x=15, N=1E5
 %dat/Exp2 ~ x=20, N=1E5
+
+%---------experiment of Yuna-----------------
+%All experiments use newly generated TbMEMLS, which fixed the wrong
+%temperature profile
+
+%dat/Exp5 ~ x=15, N=1E4, Elapsed time is 192.280114 seconds.
+%The result varies hugely everytime. The MCMC does not seem to reach to a 
+%steady-state distribution.
+
+%dat/Exp51 ~ x=15, N=1E4
+%dat/Exp52 ~ x=15, N=1E4
+
+%dat/Exp6 ~ x=15, N=1E5, Elapsed time is 1989.567482 seconds.
+
+%dat/Exp7 ~ x=15, N=1E5
+%Repeat the Exp6 to see if the result of Exp6 is reprodutive
+%Sadly, the answer seems to be, no. 

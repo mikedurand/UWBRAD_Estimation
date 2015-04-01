@@ -1,16 +1,16 @@
 %script to estimate density variations, surface temperature, and basal heat
 %flux
 
-clear all
+%clear all
 
 %load in data
-O=load('dat/TbObs.mat');
-D=load('dat/TbUWBRAD.mat');
+%O=load('dat/TbObs.mat');
+%D=load('dat/TbUWBRAD.mat');
 
-N=1E4; %MCMC iterations
+%N=1E4; %MCMC iterations
 
-ExpNum=1;
-x=15; %location 1-47 to estimate
+%ExpNum=1;
+%x=15; %location 1-47 to estimate
 
 %estimating: sigrho,Ts,B
  

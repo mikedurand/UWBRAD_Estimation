@@ -1,4 +1,3 @@
-clear all
 
 % load('dat/TbUWBRAD.mat','UWBRADc')
 load('dat/TbMEMLS.mat')
@@ -38,5 +37,8 @@ TbUWBRADc=(TbUWBRADv+TbUWBRADh)./2;
 
 figure(1)
 plot(f,TbUWBRADc(:,1,1,25))
+set(gca,'FontSize',14)
+xlabel('Frequency Ghz')
+ylabel('UWBRADTbc K')
 
 save('dat/TbUWBRAD-v2.mat','TbUWBRADc','f','rho','dT','B','tetad','nx')
