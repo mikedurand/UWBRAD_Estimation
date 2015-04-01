@@ -58,8 +58,9 @@ dTmax=max(D.dT);
 Bmin=min(D.B);
 Bmax=max(D.B);
 
-TbHat=ObsModel(D,rhoc(1),dTc(1),Bc(1),x);
-lfu=sum(log(normpdf(TbHat,TbObs,O.sigTb)));
+TbHatu=ObsModel(D,rhoc(1),dTc(1),Bc(1),x);
+lfu=sum(log(normpdf(TbHatu,TbObs,O.sigTb)));
+Tbc(1,:)=TbHatu;
 
 tic
 for i=2:N,
@@ -72,15 +73,18 @@ for i=2:N,
     if rhoc(i)<rhomin || rhoc(i)>rhomax,
         rhoc(i)=rhoc(i-1);
     else
-        TbHat=ObsModel(D,rhoc(i),dTc(i-1),Bc(i-1),x);
-        lfv=sum(log(normpdf(TbHat,TbObs,O.sigTb)));
+        TbHatv=ObsModel(D,rhoc(i),dTc(i-1),Bc(i-1),x);
+        lfv=sum(log(normpdf(TbHatv,TbObs,O.sigTb)));
         lnr= lfv-lfu;
         
         if lnr>log(u(1,i)), %then accept: keep rhoc
             na1=na1+1;
             lfu=lfv;
+            Tbc(i,:)=TbHatv;
+            TbHatu=TbHatv;
         else %reject: set rhoc to previous version
             rhoc(i)=rhoc(i-1);
+            Tbc(i,:)=TbHatu;
         end    
     end
     
@@ -89,15 +93,18 @@ for i=2:N,
     if dTc(i)<dTmin || dTc(i)>dTmax,
         dTc(i)=dTc(i-1);
     else
-        TbHat=ObsModel(D,rhoc(i),dTc(i),Bc(i-1),x);
-        lfv=sum(log(normpdf(TbHat,TbObs,O.sigTb)));
+        TbHatv=ObsModel(D,rhoc(i),dTc(i),Bc(i-1),x);
+        lfv=sum(log(normpdf(TbHatv,TbObs,O.sigTb)));
         lnr= lfv-lfu;
         
         if lnr>log(u(2,i)), %then accept: keep rhoc
             na2=na2+1;
             lfu=lfv;
+            Tbc(i,:)=TbHatv;
+            TbHatu=TbHatv;
         else %reject: set rhoc to previous version
             dTc(i)=dTc(i-1);
+            Tbc(i,:)=TbHatu;
         end    
     end
 
@@ -106,17 +113,22 @@ for i=2:N,
     if Bc(i)<Bmin || Bc(i)>Bmax,
         Bc(i)=Bc(i-1);
     else
-        TbHat=ObsModel(D,rhoc(i),dTc(i),Bc(i),x);
-        lfv=sum(log(normpdf(TbHat,TbObs,O.sigTb)));
+        TbHatv=ObsModel(D,rhoc(i),dTc(i),Bc(i),x);
+        lfv=sum(log(normpdf(TbHatv,TbObs,O.sigTb)));
         lnr= lfv-lfu;
         
         if lnr>log(u(3,i)), %then accept: keep rhoc
             na3=na3+1;
             lfu=lfv;
+            Tbc(i,:)=TbHatv;            
+            TbHatu=TbHatv;
         else %reject: set rhoc to previous version
             Bc(i)=Bc(i-1);
+            Tbc(i,:)=TbHatu;            
         end    
     end
+    
+    lf(i)=lfu; %likelihood chain
 end
 toc
 

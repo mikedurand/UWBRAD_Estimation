@@ -8,7 +8,7 @@
 % Reorganize the data in the way shown in the numbers sheet
 % Save the reorganized results in TbUWBRAD
 clear 
-RecalculateTb=true;
+RecalculateTb=false;
 
 if RecalculateTb
     GetModelOutput;
@@ -18,7 +18,7 @@ end
 
 % Choose random realizations of all parameters, and generate a
 % set of observations along the flight lines
-RenerateObs=true;
+RenerateObs=false;
 if RenerateObs
     GenerateObs;
 end
@@ -27,8 +27,8 @@ end
 %  run-time per location). Saves dat/Expi.mat, where i=0,1,2...
 %  Change ExpNum and interation# N to adjust the estimation
 x=15; %location 1-47 to estimate
-ExpNum=52;
-N=1E4; %MCMC iterations
+ExpNum=521;
+N=1E3; %MCMC iterations
 O=load('dat/TbObs.mat');
 D=load('dat/TbUWBRAD.mat');
 EstimateT;
