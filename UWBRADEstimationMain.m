@@ -29,9 +29,9 @@ end
 %  run-time per location). Saves dat/Expi.mat, where i=0,1,2...
 %  Change ExpNum and interation# N to adjust the estimation
 
-x=16; %location 1-47 to estimate
-ExpNum=13;%experiment index
-N=1E4; %MCMC iterations
+x=15; %location 1-47 to estimate
+ExpNum=12;%experiment index
+N=5E4; %MCMC iterations
 O=load('dat/TbObs.mat');
 D=load('dat/TbUWBRAD.mat');
 EstimateT;

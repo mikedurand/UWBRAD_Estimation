@@ -1,16 +1,16 @@
 %script to estimate density variations, surface temperature, and basal heat
 %flux
 
-clear all
+%clear all
 
 %load in data
-O=load('dat/TbObs.mat');
-D=load('dat/TbUWBRAD.mat');
+%O=load('dat/TbObs.mat');
+%D=load('dat/TbUWBRAD.mat');
 
-N=1E4; %MCMC iterations
+%N=1E4; %MCMC iterations
 
-ExpNum=1;
-x=15; %location 1-47 to estimate
+%ExpNum=1;
+%x=15; %location 1-47 to estimate
 
 %estimating: sigrho,Ts,B
  
@@ -47,9 +47,18 @@ Bc(1)=muB;
 
 %jump parameters: standard deviation, and limits
 %jump standard deviations: tune to get ~25% acceptance
-jmprho=1.5;
-jmpdT=.75;
-jmpB=7;
+% jmprho=1.5;% initial jump parameter, about 75% 
+% jmpdT=.75;
+% jmpB=7;
+
+% change jump parameter for rho to get a acceptance of  35%-Yuna 04/01
+% jmprho=9;
+% jmpdT=0.75;
+% jmpB=7;
+
+jmprho=6;
+jmpdT=0.3;
+jmpB=4;
 
 rhomin=min(D.rho); 
 rhomax=max(D.rho);
@@ -58,8 +67,9 @@ dTmax=max(D.dT);
 Bmin=min(D.B);
 Bmax=max(D.B);
 
-TbHat=ObsModel(D,rhoc(1),dTc(1),Bc(1),x);
-lfu=sum(log(normpdf(TbHat,TbObs,O.sigTb)));
+TbHatu=ObsModel(D,rhoc(1),dTc(1),Bc(1),x);
+lfu=sum(log(normpdf(TbHatu,TbObs,O.sigTb)));
+Tbc(1,:)=TbHatu;
 
 tic
 for i=2:N,
@@ -71,16 +81,20 @@ for i=2:N,
 
     if rhoc(i)<rhomin || rhoc(i)>rhomax,
         rhoc(i)=rhoc(i-1);
+        Tbc(i,:)=TbHatu;
     else
-        TbHat=ObsModel(D,rhoc(i),dTc(i-1),Bc(i-1),x);
-        lfv=sum(log(normpdf(TbHat,TbObs,O.sigTb)));
+        TbHatv=ObsModel(D,rhoc(i),dTc(i-1),Bc(i-1),x);
+        lfv=sum(log(normpdf(TbHatv,TbObs,O.sigTb)));
         lnr= lfv-lfu;
         
         if lnr>log(u(1,i)), %then accept: keep rhoc
             na1=na1+1;
             lfu=lfv;
+            Tbc(i,:)=TbHatv;
+            TbHatu=TbHatv;
         else %reject: set rhoc to previous version
             rhoc(i)=rhoc(i-1);
+            Tbc(i,:)=TbHatu;
         end    
     end
     
@@ -88,16 +102,20 @@ for i=2:N,
     dTc(i)=dTc(i-1)+jmpz(2,i).*jmpdT;
     if dTc(i)<dTmin || dTc(i)>dTmax,
         dTc(i)=dTc(i-1);
+        Tbc(i,:)=TbHatu;
     else
-        TbHat=ObsModel(D,rhoc(i),dTc(i),Bc(i-1),x);
-        lfv=sum(log(normpdf(TbHat,TbObs,O.sigTb)));
+        TbHatv=ObsModel(D,rhoc(i),dTc(i),Bc(i-1),x);
+        lfv=sum(log(normpdf(TbHatv,TbObs,O.sigTb)));
         lnr= lfv-lfu;
         
         if lnr>log(u(2,i)), %then accept: keep rhoc
             na2=na2+1;
             lfu=lfv;
+            Tbc(i,:)=TbHatv;
+            TbHatu=TbHatv;
         else %reject: set rhoc to previous version
             dTc(i)=dTc(i-1);
+            Tbc(i,:)=TbHatu;
         end    
     end
 
@@ -105,18 +123,24 @@ for i=2:N,
     Bc(i)=Bc(i-1)+jmpz(3,i).*jmpB;
     if Bc(i)<Bmin || Bc(i)>Bmax,
         Bc(i)=Bc(i-1);
+        Tbc(i,:)=TbHatu;            
     else
-        TbHat=ObsModel(D,rhoc(i),dTc(i),Bc(i),x);
-        lfv=sum(log(normpdf(TbHat,TbObs,O.sigTb)));
+        TbHatv=ObsModel(D,rhoc(i),dTc(i),Bc(i),x);
+        lfv=sum(log(normpdf(TbHatv,TbObs,O.sigTb)));
         lnr= lfv-lfu;
         
         if lnr>log(u(3,i)), %then accept: keep rhoc
             na3=na3+1;
             lfu=lfv;
+            Tbc(i,:)=TbHatv;            
+            TbHatu=TbHatv;
         else %reject: set rhoc to previous version
             Bc(i)=Bc(i-1);
+            Tbc(i,:)=TbHatu;            
         end    
     end
+    
+    lf(i)=lfu; %likelihood chain
 end
 toc
 
