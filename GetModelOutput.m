@@ -5,7 +5,7 @@ load('dat/TbMEMLS.mat')
 
 %UWBRADSensor=GetSensorData('~/Data/UWBRAD/CSA_antenna_phi0_theta_pattern.dat');
 
-fname='ConicalSpiral_40Turns_NoseConeGeometry.csv';
+fname='dat/ConicalSpiral_40Turns_NoseConeGeometry.csv';
 UWBRADSensor.GaindB=csvread(fname,1,1,[1,1,181,16]);    
 UWBRADSensor.Theta=180:-2:-180;
 UWBRADSensor.Freq=linspace(0.5,2,16);

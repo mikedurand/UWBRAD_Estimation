@@ -20,7 +20,7 @@ end
 % Choose random realizations of all parameters, and generate a
 % set of observations along the flight lines
 
-RenerateObs=false;
+RenerateObs=true;
 if RenerateObs
     GenerateObs;
 end
