@@ -13,10 +13,14 @@
 % ObsModel: Interpolates between model data as a way of exploring parameter
 %     space
 
+% ~ Add By Yuna ~
+%ACF_k: calculate the autocorrelation of the Markov chain
+%psrf: calculate the Gelman and Rubin Potential Scale Reduction Factor
 %% Data
 % dat/ includes the MEMLS database of model runs
 
 %% Experiments
+<<<<<<< HEAD
 %dat/Exp0 ~ x=15, N=1E4
 %dat/Exp1 ~ x=15, N=1E5
 %dat/Exp2 ~ x=20, N=1E5
@@ -37,3 +41,5 @@
 %dat/Exp7 ~ x=15, N=1E5
 %Repeat the Exp6 to see if the result of Exp6 is reprodutive
 %Sadly, the answer seems to be, no. 
+=======
+>>>>>>> pr/3

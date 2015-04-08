@@ -47,9 +47,18 @@ Bc(1)=muB;
 
 %jump parameters: standard deviation, and limits
 %jump standard deviations: tune to get ~25% acceptance
-jmprho=1.5;
-jmpdT=.75;
-jmpB=7;
+% jmprho=1.5;% initial jump parameter, about 75% 
+% jmpdT=.75;
+% jmpB=7;
+
+% change jump parameter for rho to get a acceptance of  35%-Yuna 04/01
+% jmprho=9;
+% jmpdT=0.75;
+% jmpB=7;
+
+jmprho=6;
+jmpdT=0.3;
+jmpB=4;
 
 rhomin=min(D.rho); 
 rhomax=max(D.rho);
@@ -72,6 +81,7 @@ for i=2:N,
 
     if rhoc(i)<rhomin || rhoc(i)>rhomax,
         rhoc(i)=rhoc(i-1);
+        Tbc(i,:)=TbHatu;
     else
         TbHatv=ObsModel(D,rhoc(i),dTc(i-1),Bc(i-1),x);
         lfv=sum(log(normpdf(TbHatv,TbObs,O.sigTb)));
@@ -92,6 +102,7 @@ for i=2:N,
     dTc(i)=dTc(i-1)+jmpz(2,i).*jmpdT;
     if dTc(i)<dTmin || dTc(i)>dTmax,
         dTc(i)=dTc(i-1);
+        Tbc(i,:)=TbHatu;
     else
         TbHatv=ObsModel(D,rhoc(i),dTc(i),Bc(i-1),x);
         lfv=sum(log(normpdf(TbHatv,TbObs,O.sigTb)));
@@ -112,6 +123,7 @@ for i=2:N,
     Bc(i)=Bc(i-1)+jmpz(3,i).*jmpB;
     if Bc(i)<Bmin || Bc(i)>Bmax,
         Bc(i)=Bc(i-1);
+        Tbc(i,:)=TbHatu;            
     else
         TbHatv=ObsModel(D,rhoc(i),dTc(i),Bc(i),x);
         lfv=sum(log(normpdf(TbHatv,TbObs,O.sigTb)));
