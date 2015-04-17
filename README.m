@@ -1,3 +1,4 @@
+
 %% Scripts
 %  ~WORKFLOW SCRIPTS~
 % GetModelOutput: Rework MEMLS runs into a 
@@ -19,4 +20,13 @@
 %% Data
 % dat/ includes the MEMLS database of model runs
 
-%% Experiments
+%% Experiments (Happy April Fool's day)
+% Exp1, x=15,N=1e4  To test if the new script run correctly
+% Exp2, x=15,N=5e4  Still have problem in reading the right data
+
+%-------Start of the results--------
+%Exp3, x=15,N=5e4, jmprho=9,jmpdT=0.75,jmpB=7
+%Exp4, x=15,N=1e4,play with the jmp
+%Exp5 jmprho=10;jmpdT=0.6;jmpB=6;
+%Exp6, x=18
+

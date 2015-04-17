@@ -52,13 +52,10 @@ Bc(1)=muB;
 % jmpB=7;
 
 % change jump parameter for rho to get a acceptance of  35%-Yuna 04/01
-% jmprho=9;
-% jmpdT=0.75;
-% jmpB=7;
+jmprho=10;
+jmpdT=0.6;
+jmpB=5.5;
 
-jmprho=6;
-jmpdT=0.3;
-jmpB=4;
 
 rhomin=min(D.rho); 
 rhomax=max(D.rho);

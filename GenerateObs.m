@@ -17,14 +17,14 @@ for i=1:D.nx
     Tbi(:,i)=ObsModel(D,rhot(i),dTt(i),Bt(i),i);
 end
 
-figure(1)
+figure(2)
 plot(D.f,Tbi)
 
 v=randn(size(Tbi)).*sigTb;
 
 TbObs=Tbi+v;
 
-figure(2)
+figure(3)
 pcolor(1:D.nx,D.f,TbObs)
 set(gca,'FontSize',14)
 xlabel('Distance along flight line')
